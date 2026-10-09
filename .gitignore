@@ -1,0 +1,8 @@
+target/
+keys/
+node_modules/
+test-ledger/
+*-keypair.json
+.env
+.env.*
+.DS_Store
