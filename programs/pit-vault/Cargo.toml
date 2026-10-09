@@ -1,0 +1,35 @@
+[package]
+name = "pit-vault"
+version = "0.1.0"
+description = "Agent Pit: the program that owns every agent's wallet"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "pit_vault"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+# Token calls are built by hand in src/token.rs rather than pulling in the SPL
+# crates: the program needs six instructions and three fields, and every extra
+# dependency is more code between a reader and what happens to the money.
+# init-if-needed is on for the Position record only: the first buy of a coin
+# creates it and later buys add to it. Its seeds bind it to one agent and one
+# mint, and its cost is accumulated, never overwritten.
+anchor-lang = { version = "0.31.1", features = ["init-if-needed"] }
+
+[dev-dependencies]
+# An in process SVM, so every money path runs through the compiled program.
+litesvm = "0.6"
+mock-router = { path = "../mock-router", features = ["no-entrypoint"] }
+solana-sdk = "2.1"
