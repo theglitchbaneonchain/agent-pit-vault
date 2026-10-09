@@ -1,0 +1,19 @@
+[package]
+name = "mock-router"
+version = "0.1.0"
+description = "Test only. Stands in for the swap router, honest or hostile on request."
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "mock_router"
+
+[features]
+default = []
+no-entrypoint = []
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+
+[dependencies]
+anchor-lang = "0.31.1"
